@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projets{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+    <div class="flex justify-between">
+        <p>Bonjour {{ app.user.username }} !</p>
+    </div>
+    {% endif %}
+    <div class="border mx-50 p-10 rounded-lg shadow-lg">
+        <div class="flex justify-between mb-4">
+            <h1 class="font-bold mt-2">Projets</h1>
+            {% if app.user %}
+                {% if 'ROLE_ADMIN' in app.user.roles %}
+            <div><a class="inline-block rounded border-2 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950" href="{{ path('admin_dashboard_index') }}"> Administration</a> <a class="inline-block rounded border-2 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950" href="{{ path('app_logout') }}"> Déconnexion</a></div>
+            {% else %}
+                <a class="inline-block rounded border-2 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950" href="{{ path('app_logout') }}"> Déconnexion</a>
+            {% endif %}
+            {% else %}
+                <a class="inline-block rounded border-2 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950" href=" {{ path('app_login') }}"> Connexion... </a>
+            {% endif %}
+        </div>
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 -ml-4">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr class="bg-white border-b">
+                    <th class="px-6 py-4">Nom</th>
+                    <th class="px-6 py-4">Vignette</th>
+                    <th class="px-6 py-4 w-32">Description</th>
+                    <th class="px-6 py-4">Lien</th>
+                    <th class="px-6 py-4">Date de début</th>
+                    <th class="px-6 py-4">Date de fin</th>
+                    <th class="px-6 py-4">Date de création</th>
+                    <th class="px-6 py-4">Date de modification</th>
+                    <th class="px-6 py-4">Catégorie</th>
+                    <th class="px-6 py-4">Technologies</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                    <tr class="bg-white border-b text-blue-800">
+                        <td class="px-6 py-4 max-w-sm">{{ project.projectName }}</td>
+                        <td class="px-6 py-4 max-w-sm"><img src="uploads/images/{{ asset(project.projectThumbnail) }}" alt="{{ project.projectName }}" width="100"></td>
+                        <td class="px-6 py-4 w-32">{{ project.projectDescription }}</td>
+                        <td class="px-6 py-4">{{ project.projectLink }}</td>
+                        <td class="px-6 py-4">{{ project.projectStartDate ? project.projectStartDate|date('d-m-Y') : '' }}</td>
+                        <td class="px-6 py-4">{{ project.projectEndDate ? project.projectEndDate|date('d-m-Y') : '' }}</td>
+                        <td class="px-6 py-4">{{ project.projectCreationDate ? project.projectCreationDate|date('d-m-Y') : '' }}</td>
+                        <td class="px-6 py-4">{{ project.projectModificationDate ? project.projectModificationDate|date('d-m-Y') : '' }}</td>
+                        <td class="px-6 py-4">{{ project.Category.categoryLabel }}</td>
+                        <td class="px-6 py-4">
+                            <ul>
+                                {% for technology in project.technologies %}
+                                    <li>{{ technology.technologyLabel }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
