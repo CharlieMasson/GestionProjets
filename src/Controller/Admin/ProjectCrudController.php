@@ -34,17 +34,8 @@ class ProjectCrudController extends AbstractCrudController
             DateField::new('projectCreationDate', 'Date de création'),
             DateField::new('projectModificationDate', 'Date de modification'),
             AssociationField::new('Category', 'Catégorie'),
-            CollectionField::new('technologies', 'Technologies')
-                ->setFormTypeOptions([
-                    'by_reference' => false,
-                    'allow_add' => true,
-                    'allow_delete' => true, 
-                ])
-                ->setEntryType(EntityType::class)
-                ->setCustomOptions([
-                    'class' => 'App\Entity\Technology',
-                    'multiple' => true,
-                ]),
+            AssociationField::new('technologies', 'Technology')
+                ->setFormTypeOption('choice_label', 'technology_label')
         ];
     }
 }

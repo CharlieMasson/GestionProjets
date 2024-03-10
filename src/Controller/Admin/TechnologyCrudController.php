@@ -7,6 +7,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class TechnologyCrudController extends AbstractCrudController
 {
@@ -18,11 +20,10 @@ class TechnologyCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('technologyLabel'),
-            AssociationField::new('projects')
+            TextField::new('technologyLabel', "Libellé"),
+            AssociationField::new('projects', "Projets")
                 ->onlyOnIndex(),
-            ArrayField::new('projects')
+            ArrayField::new('projects', 'Projets')
                 ->onlyOnDetail(),
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Project;
+use App\Entity\Technology;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -44,11 +45,13 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Menu', 'fa fa-home');
         yield MenuItem::linkToCrud('Projets', 'fa-solid fa-folder', Project::class);
         yield MenuItem::linkToCrud('Nouveau Projet', 'fa-solid fa-plus', Project::class)->setAction('new');
+        yield MenuItem::linkToCrud('Technologies', 'fa-brands fa-js', Technology::class);
+        yield MenuItem::linkToCrud('Nouvelle Technologie', 'fa-solid fa-plus', Technology::class)->setAction('new');
         yield MenuItem::linkToRoute('Retour à l\'acceuil', 'fa-solid fa-arrow-left', 'app_home');
         yield MenuItem::linkToLogout('Déconnexion', 'fa-solid fa-door-open');
     }
 
-    public function configeCrud(): Crud 
+    public function configureCrud(): Crud 
     {
         return parent::configureCrud();
     }
